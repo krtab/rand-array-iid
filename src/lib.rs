@@ -3,11 +3,17 @@ use rand_distr::Distribution;
 use std::mem::{forget, transmute, MaybeUninit};
 use std::ptr::read;
 
+#[derive(Debug, Eq, PartialEq, Copy, Clone)]
 pub struct IIDDistr<D> {
     distribution: D,
 }
 
 
+impl<D> IIDDistr<D> {
+    pub const fn new(d: D) -> Self {
+        IIDDistr { distribution: d }
+    }
+}
 
 macro_rules! impl_distr_array {
     ($($n: literal)+) => ($(
