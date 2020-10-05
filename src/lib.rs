@@ -26,6 +26,9 @@ macro_rules! impl_distr_from_iterator {
 }
 
 impl_distr_from_iterator!(Vec<T>);
+impl_distr_from_iterator!(Box<[T]>);
+impl_distr_from_iterator!(std::collections::VecDeque<T>);
+impl_distr_from_iterator!(std::collections::LinkedList<T>);
 
 
 macro_rules! impl_distr_array {
