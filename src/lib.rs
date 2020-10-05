@@ -8,7 +8,6 @@ pub struct IIDDistr<D> {
     distribution: D,
 }
 
-
 impl<D> IIDDistr<D> {
     pub const fn new(d: D) -> Self {
         IIDDistr { distribution: d }
@@ -91,4 +90,28 @@ impl_distr_array! {
     481 482 483 484 485 486 487 488 489 490 491 492
     493 494 495 496 497 498 499 500 501 502 503 504
     505 506 507 508 509 510 511 512
+}
+
+pub const STANDARD_MULTI_NORMAL: IIDDistr<rand_distr::StandardNormal> =
+    IIDDistr::new(rand_distr::StandardNormal);
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use rand::rngs::StdRng;
+    use rand::SeedableRng;
+
+    type TestRng = StdRng;
+
+    fn create_rng() -> TestRng {
+        TestRng::seed_from_u64(0x0)
+    }
+    #[test]
+    fn sample_standard_array_3() {
+        let mut rng = create_rng();
+        let x: [f64; 3] = rng.sample(&STANDARD_MULTI_NORMAL);
+        let mut rng = create_rng();
+        let y: [f64; 3] = rng.sample(&STANDARD_MULTI_NORMAL);
+        assert_eq!(x, y);
+    }
 }
