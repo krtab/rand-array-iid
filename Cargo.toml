@@ -1,5 +1,6 @@
 [workspace] 
 
 members = [
-    "rand-array-iid"
+    "rand-array-iid",
+    "panic_sampling"
 ]
