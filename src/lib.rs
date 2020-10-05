@@ -7,26 +7,7 @@ pub struct IIDDistr<D> {
     distribution: D,
 }
 
-macro_rules! impl_distr_from_iterator {
-    ($col: ty) => {
-        impl<D, T> Distribution<$col> for IIDDistr<D>
-        where
-            D: Distribution<T>,
-        {
-            fn sample<R>(&self, rng: &mut R) -> $col
-            where
-                R: Rng + ?Sized,
-            {
-                (&self.distribution).sample_iter(rng).collect()
-            }
-        }
-    };
-}
 
-impl_distr_from_iterator!(Vec<T>);
-impl_distr_from_iterator!(Box<[T]>);
-impl_distr_from_iterator!(std::collections::VecDeque<T>);
-impl_distr_from_iterator!(std::collections::LinkedList<T>);
 
 macro_rules! impl_distr_array {
     ($($n: literal)+) => ($(
