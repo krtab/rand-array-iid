@@ -1,27 +1,25 @@
-use rand_distr::Distribution;
 use rand::Rng;
-use std::mem::{MaybeUninit,transmute,forget};
+use rand_distr::Distribution;
+use std::mem::{forget, transmute, MaybeUninit};
 use std::ptr::read;
 
-pub struct IIDDistr<D>
-where
-{
-    distribution: D
+pub struct IIDDistr<D> {
+    distribution: D,
 }
 
 macro_rules! impl_distr_from_iterator {
     ($col: ty) => {
-        impl<D,T> Distribution<$col> for IIDDistr<D>
+        impl<D, T> Distribution<$col> for IIDDistr<D>
         where
             D: Distribution<T>,
         {
-            fn sample<R>(&self, rng: &mut R) -> $col 
+            fn sample<R>(&self, rng: &mut R) -> $col
             where
                 R: Rng + ?Sized,
             {
                 (&self.distribution).sample_iter(rng).collect()
             }
-        }  
+        }
     };
 }
 
@@ -30,7 +28,6 @@ impl_distr_from_iterator!(Box<[T]>);
 impl_distr_from_iterator!(std::collections::VecDeque<T>);
 impl_distr_from_iterator!(std::collections::LinkedList<T>);
 
-
 macro_rules! impl_distr_array {
     ($($n: literal)+) => ($(
         impl<D,T> Distribution<[T;$n]> for IIDDistr<D>
@@ -38,18 +35,18 @@ macro_rules! impl_distr_array {
             D: Distribution<T>,
             T: Sized
         {
-            fn sample<R>(&self, rng: &mut R) -> [T;$n] 
+            fn sample<R>(&self, rng: &mut R) -> [T;$n]
             where
                 R: Rng + ?Sized,
             {
                 let mut res: [MaybeUninit<T>; $n] = unsafe {
                     MaybeUninit::uninit().assume_init()
                 };
-        
+
                 for elem in &mut res[..] {
                     *elem = MaybeUninit::new(self.distribution.sample(rng));
                 }
-         
+
                 unsafe {
                     let raw_ptr : *const [T;$n] = transmute(&res);
                     let value = read(raw_ptr);
@@ -57,7 +54,7 @@ macro_rules! impl_distr_array {
                     value
                 }
             }
-        }        
+        }
     )+)
 }
 
@@ -102,5 +99,5 @@ impl_distr_array! {
     469 470 471 472 473 474 475 476 477 478 479 480
     481 482 483 484 485 486 487 488 489 490 491 492
     493 494 495 496 497 498 499 500 501 502 503 504
-    505 506 507 508 509 510 511 512    
+    505 506 507 508 509 510 511 512
 }
