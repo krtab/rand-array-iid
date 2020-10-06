@@ -15,9 +15,9 @@ rand-array-iid = "0.1.0"
 
 ### An array of normally distributed scalars
 ```rust
-# use rand_array_iid::IIDDistr;
-# use rand_distr::Distribution;
-# use rand_distr::StandardNormal;
+use rand_array_iid::IIDDistr;
+use rand_distr::Distribution;
+use rand_distr::StandardNormal;
 let distr = IIDDistr::new(StandardNormal);
 let mut rng = rand::thread_rng();
 // Each of x element is distributed according to StandardNormal.
@@ -26,9 +26,9 @@ let x : [f64; 10] = distr.sample(&mut rng);
 
 ### An array of 3D vectors sampled from the unit sphere
 ```rust
-# use rand_array_iid::IIDDistr;
-# use rand_distr::Distribution;
-# use rand_distr::UnitSphere;
+use rand_array_iid::IIDDistr;
+use rand_distr::Distribution;
+use rand_distr::UnitSphere;
 let distr = IIDDistr::new(UnitSphere);
 let mut rng = rand::thread_rng();
 // Each of x element is sampled uniformly from the surface of the 3D unit sphere.
@@ -42,8 +42,8 @@ no information on their size in their type, hence the idstribution would have
 to be restricted to a given size. They can also be sampled as follow:
 
 ```rust
-# use rand_distr::Distribution;
-# use rand::Rng;
+use rand_distr::Distribution;
+use rand::Rng;
 fn sample_iid<D,R, Col>(dist: D, rng: &mut R, n: usize) -> Col
 where
     R: Rng + ?Sized,
