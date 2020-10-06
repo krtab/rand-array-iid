@@ -1,6 +1,15 @@
-[workspace] 
+[package]
+name = "rand-array-iid"
+version = "0.1.0"
+authors = ["Arthur Carcano <arthur.carcano@gmail.com>"]
+edition = "2018"
 
-members = [
-    "rand-array-iid",
-    "panic_sampling"
-]
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rand = {version = "0.7.3"}
+rand_distr =  {version = "0.3.0"}
+array-init = "0.1.1"
+
+[features]
+more_array_sizes = []
