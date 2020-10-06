@@ -55,7 +55,7 @@ use array_init::array_init;
 use rand::Rng;
 use rand_distr::Distribution;
 
-#[derive(Debug, Eq, PartialEq, Copy, Clone)]
+#[derive(Debug, Eq, PartialEq, Copy, Clone, Default, Hash)]
 /// A distribution on arrays whose elements are i.i.d. with distribution `D`.
 ///
 /// See crate-level documentation for more information.
