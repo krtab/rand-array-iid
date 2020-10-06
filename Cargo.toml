@@ -3,8 +3,16 @@ name = "rand-array-iid"
 version = "0.1.0"
 authors = ["Arthur Carcano <arthur.carcano@gmail.com>"]
 edition = "2018"
+description = "Create arrays whose elements are independently identically distributed."
+readme = "Readme.md"
+repository = "https://github.com/krtab/rand-array-iid"
+license = "MIT"
+keywords = ["rand","random","array","arr"]
+categories = ["algorithms"]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[badges]
+travis-ci = { repository = "krtab/rand-array-iid", branch = "main" }
+maintenance = { status = "passively-maintained" }
 
 [dependencies]
 rand = {version = "0.7.3"}
