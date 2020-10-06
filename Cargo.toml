@@ -9,6 +9,7 @@ repository = "https://github.com/krtab/rand-array-iid"
 license = "MIT"
 keywords = ["rand","random","array","arr"]
 categories = ["algorithms","no-std"]
+exclude = [".travis.yml"]
 
 [badges]
 travis-ci = { repository = "krtab/rand-array-iid", branch = "main" }
