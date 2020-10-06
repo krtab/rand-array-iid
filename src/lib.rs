@@ -7,6 +7,13 @@
 //! `IIDDistr<D>` can be used to sample arrays whose elements are
 //! Independently Identically Distributed (i.i.d.) according to `D`.
 //!
+//! # Handling of panic
+//!
+//! If sampling from the underlying distributon `D` panics, sampling
+//! from `IIDDistr<D>` panics as well, but no memory is leaked.
+//! This guarantee actually comes from the
+//! [`array_init`](https://docs.rs/array-init/0.1.1/array_init/) crate.
+//!
 //! # Examples
 //!
 //! ## An array of normally distributed scalars
