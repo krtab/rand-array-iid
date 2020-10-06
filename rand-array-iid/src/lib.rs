@@ -1,7 +1,6 @@
+use array_init::array_init;
 use rand::Rng;
 use rand_distr::Distribution;
-use std::mem::{forget, transmute, MaybeUninit};
-use std::ptr::read;
 
 #[derive(Debug, Eq, PartialEq, Copy, Clone)]
 pub struct IIDDistr<D> {
@@ -25,20 +24,9 @@ macro_rules! impl_distr_array {
             where
                 R: Rng + ?Sized,
             {
-                let mut res: [MaybeUninit<T>; $n] = unsafe {
-                    MaybeUninit::uninit().assume_init()
-                };
-
-                for elem in &mut res[..] {
-                    *elem = MaybeUninit::new(self.distribution.sample(rng));
-                }
-
-                unsafe {
-                    let raw_ptr : *const [T;$n] = transmute(&res);
-                    let value = read(raw_ptr);
-                    forget(res);
-                    value
-                }
+               array_init(
+                   |_| self.distribution.sample(rng)
+                )
             }
         }
     )+)
