@@ -1,13 +1,81 @@
+//! This crates exposes a single struct, [`IIDDistr`], parametrized by a [`Distribution`] `D`.
+//!
+//! If D is a `Distribution<T>` (meaning that it can be used to sample random variate of type `T`)
+//! then `IIDDistr<D>` is a `Distribution<[T;n]>` for *n*
+//! between 0 and 31 included (by default),
+//! and up to 512 included if the feature `more_array_sizes` is activated.
+//! `IIDDistr<D>` can be used to sample arrays whose elements are
+//! Independently Identically Distributed (i.i.d.) according to `D`.
+//!
+//! # Examples
+//!
+//! ## An array of normally distributed scalars
+//! ```rust
+//! # use rand_array_iid::IIDDistr;
+//! # use rand_distr::Distribution;
+//! # use rand_distr::StandardNormal;
+//! let distr = IIDDistr::new(StandardNormal);
+//! let mut rng = rand::thread_rng();
+//! // Each of x element is distributed according to StandardNormal.
+//! let x : [f64; 10] = distr.sample(&mut rng);
+//! ```
+//!
+//! ## An array of 3D vectors sampled from the unit sphere
+//! ```rust
+//! # use rand_array_iid::IIDDistr;
+//! # use rand_distr::Distribution;
+//! # use rand_distr::UnitSphere;
+//! let distr = IIDDistr::new(UnitSphere);
+//! let mut rng = rand::thread_rng();
+//! // Each of x element is sampled uniformly from the surface of the 3D unit sphere.
+//! let x : [[f64; 3]; 10] = distr.sample(&mut rng);
+//! ```
+//!
+//! # Why only arrays?
+//!
+//! Collections such as [`Vec`] that implement [`std::iter::FromIterator`] bear
+//! no information on their size in their type, hence the idstribution would have
+//! to be restricted to a given size. They can also be sampled as follow:
+//!
+//! ```rust
+//! # use rand_distr::Distribution;
+//! # use rand::Rng;
+//! fn sample_iid<D,R, Col>(dist: D, rng: &mut R, n: usize) -> Col
+//! where
+//!     R: Rng + ?Sized,
+//!     Col: std::iter::IntoIterator,
+//!     Col: std::iter::FromIterator<<Col as std::iter::IntoIterator>::Item>,
+//!     D: Distribution<<Col as std::iter::IntoIterator>::Item>,
+//! {
+//!     dist.sample_iter(rng).take(n).collect()
+//! }
+//! ```
+
 use array_init::array_init;
 use rand::Rng;
 use rand_distr::Distribution;
 
 #[derive(Debug, Eq, PartialEq, Copy, Clone)]
+/// A distribution on arrays whose elements are i.i.d. with distribution `D`.
+///
+/// See crate-level documentation for more information.
 pub struct IIDDistr<D> {
     distribution: D,
 }
 
 impl<D> IIDDistr<D> {
+    /// Create an i.i.d. distribution, where each array element is distributed according to `D`.
+    ///
+    /// # Examples
+    /// ```rust
+    /// # use rand_array_iid::IIDDistr;
+    /// # use rand_distr::Distribution;
+    /// # use rand_distr::StandardNormal;
+    /// let distr = IIDDistr::new(StandardNormal);
+    /// let mut rng = rand::thread_rng();
+    /// // Each of x element is distributed according to StandardNormal
+    /// let x : [f64; 10] = distr.sample(&mut rng);
+    /// ```
     pub const fn new(d: D) -> Self {
         IIDDistr { distribution: d }
     }
@@ -80,6 +148,17 @@ impl_distr_array! {
     505 506 507 508 509 510 511 512
 }
 
+/// The multivariate standard normal distribution.
+///
+/// # Examples
+/// ```rust
+/// # use rand_array_iid::STANDARD_MULTI_NORMAL;
+/// # use rand_distr::Distribution;
+/// # use rand_distr::StandardNormal;
+/// let mut rng = rand::thread_rng();
+/// // Each of x element is distributed according to StandardNormal
+/// let x : [f64; 10] = STANDARD_MULTI_NORMAL.sample(&mut rng);
+/// ```
 pub const STANDARD_MULTI_NORMAL: IIDDistr<rand_distr::StandardNormal> =
     IIDDistr::new(rand_distr::StandardNormal);
 
