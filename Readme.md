@@ -1,6 +1,6 @@
 # Rand-array-iid
 
-[![Build Status](https://img.shields.io/travis/krtab/rand-array-iid/master?style=flat-square)](https://travis-ci.org/krtab/rand-array-iid)
+[![Build Status](https://img.shields.io/travis/krtab/rand-array-iid/main?style=flat-square)](https://travis-ci.org/krtab/rand-array-iid)
 
 A rust crate to create arrays whose elements are independently identically distributed.
 
