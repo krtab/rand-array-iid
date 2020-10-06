@@ -50,7 +50,7 @@
 //!     dist.sample_iter(rng).take(n).collect()
 //! }
 //! ```
-
+#![no_std]
 use array_init::array_init;
 use rand::Rng;
 use rand_distr::Distribution;

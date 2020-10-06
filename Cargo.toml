@@ -8,7 +8,7 @@ readme = "Readme.md"
 repository = "https://github.com/krtab/rand-array-iid"
 license = "MIT"
 keywords = ["rand","random","array","arr"]
-categories = ["algorithms"]
+categories = ["algorithms","no-std"]
 
 [badges]
 travis-ci = { repository = "krtab/rand-array-iid", branch = "main" }
