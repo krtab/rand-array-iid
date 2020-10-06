@@ -41,7 +41,7 @@
 //! # Why only arrays?
 //!
 //! Collections such as [`Vec`] that implement [`std::iter::FromIterator`] bear
-//! no information on their size in their type, hence the idstribution would have
+//! no information on their size in their type, hence the distribution would have
 //! to be restricted to a given size. They can also be sampled as follow:
 //!
 //! ```rust
