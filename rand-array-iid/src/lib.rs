@@ -95,6 +95,7 @@ mod tests {
         TestRng::seed_from_u64(0x0)
     }
     #[test]
+    #[allow(clippy::float_cmp)]
     fn sample_standard_array_3() {
         let mut rng = create_rng();
         let x: [f64; 3] = rng.sample(&STANDARD_MULTI_NORMAL);
