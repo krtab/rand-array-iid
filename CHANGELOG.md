@@ -6,4 +6,4 @@
  - doc badge to Readme
 
 ### Fixed
-    - typos in Readme.md and doc
+ - typos in Readme.md and doc
