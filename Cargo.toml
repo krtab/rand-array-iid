@@ -7,6 +7,7 @@ description = "Create arrays whose elements are independently identically distri
 readme = "Readme.md"
 repository = "https://github.com/krtab/rand-array-iid"
 license = "MIT"
+license-file = "LICENSE.txt"
 keywords = ["rand","random","array","arr"]
 categories = ["algorithms","no-std"]
 exclude = [".travis.yml"]
