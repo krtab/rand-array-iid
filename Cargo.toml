@@ -1,6 +1,6 @@
 [package]
 name = "rand-array-iid"
-version = "0.1.1"
+version = "0.2.0"
 authors = ["Arthur Carcano <arthur.carcano@gmail.com>"]
 edition = "2018"
 description = "Create arrays whose elements are independently identically distributed."
